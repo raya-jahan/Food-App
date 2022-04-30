@@ -2,17 +2,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
-import 'package:food_app/views/home_screen/home_screen.dart';
+import 'package:food_app/controllers/user_provider.dart';
+import 'package:food_app/views/home/home_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
-
   @override
   State<SignIn> createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
+  late UserProvider userProvider;
   _googleSignUp() async {
     try {
       final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -30,6 +31,12 @@ class _SignInState extends State<SignIn> {
       );
 
       final User? user = (await _auth.signInWithCredential(credential)).user;
+      userProvider.addUserData(
+        currentUser: user,
+        userEmail: user!.email.toString(),
+        userImage: user.photoURL.toString(),
+        userName: user.displayName.toString(),
+      );
       // print("signed in " + user.displayName);
 
       return user;
@@ -38,6 +45,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -77,8 +85,8 @@ class _SignInState extends State<SignIn> {
                         SignInButton(
                           Buttons.Google,
                           text: "Sign in with Google",
-                          onPressed: () {
-                            _googleSignUp().then(
+                          onPressed: () async {
+                            await _googleSignUp().then(
                               (value) => Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                   builder: (context) => HomeScreen(),
