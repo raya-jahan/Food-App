@@ -18,6 +18,9 @@ class ProductProvider with ChangeNotifier {
 
   ///////////////HerbsProduct and Junkies///////////////////////
   List<ProductModel> herbsProductList = [];
+  int calculateTotalAmount(int itemCount) {
+    return 20 * itemCount;
+  }
 
   fetchHerbsProductData() async {
     List<ProductModel> newList = [];
@@ -37,46 +40,12 @@ class ProductProvider with ChangeNotifier {
     return herbsProductList;
   }
 
-  //////////////////// Fresh Product and Healthy food /////////////
-  List<ProductModel> freshProductList = [];
-
-  fetchFreshProductData() async {
-    List<ProductModel> newList = [];
-
-    QuerySnapshot value =
-        await FirebaseFirestore.instance.collection("FreshProduct").get();
-    value.docs.forEach((element) {
-      productModels(element);
-      newList.add(productModel);
-    });
-    freshProductList = newList;
-    notifyListeners();
-  }
-
-  List<ProductModel> get getFreshProductDataList {
-    return freshProductList;
-  }
-
-  /////////////////Search Return////////////////////
-  List<ProductModel> get getAllProductSearch {
-    return search;
-  }
-
-  int calculateTotalAmount(int itemCount) {
-    return 20 * itemCount;
-  }
-
-  int itemCount = 4;
-  int calculateCount(itemCount) {
-    return itemCount;
-  }
-
-  String? pressDelete(count) {
+  String? searchItem(count) {
     bool isBool = false;
-    int count = 5;
-    if (count == 5) {
+    int count = 2;
+    if (count == 2) {
       isBool = true;
-      String? a = "deleted";
+      String? a = "true";
       return a;
     }
   }
@@ -93,9 +62,43 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
+  //////////////////// Fresh Product and Healthy food /////////////
+  List<ProductModel> freshProductList = [];
+  int itemCount = 4;
+  int calculateCount(itemCount) {
+    return itemCount;
+  }
+
+  fetchFreshProductData() async {
+    List<ProductModel> newList = [];
+
+    QuerySnapshot value =
+        await FirebaseFirestore.instance.collection("FreshProduct").get();
+    value.docs.forEach((element) {
+      productModels(element);
+      newList.add(productModel);
+    });
+    freshProductList = newList;
+    notifyListeners();
+  }
+
+  String? pressDelete(count) {
+    bool isBool = false;
+    int count = 5;
+    if (count == 5) {
+      isBool = true;
+      String? a = "deleted";
+      return a;
+    }
+  }
+
+  List<ProductModel> get getFreshProductDataList {
+    return freshProductList;
+  }
+
   String? addToCart(count) {
     bool isBool = false;
-    int? count;
+
     if (count == 6) {
       isBool = true;
       String? a = "Added Successfully";
@@ -103,15 +106,8 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
-  String? searchItem(count) {
-    bool isBool = false;
-    int count = 2;
-    if (count == 2) {
-      isBool = true;
-      String? a = "true";
-      return a;
-    }
+  /////////////////Search Return////////////////////
+  List<ProductModel> get getAllProductSearch {
+    return search;
   }
-
-  //searching item with lowerCase successful
 }

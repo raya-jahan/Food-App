@@ -5,7 +5,7 @@ import 'package:food_app/controllers/product_provider.dart';
 import 'package:food_app/main.dart';
 
 void main() {
-  test("AddToCart", () {
+  test("addToCart", () {
     ProductProvider p = ProductProvider();
     expect("Added Successfully", p.addToCart(6));
   });
