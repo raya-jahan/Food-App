@@ -26,23 +26,6 @@ Backend: Firebase Auth, Firestore, State Management	Provider
 UI/UX Design:	Material Design, Drawer Navigation
 Data Handling:	Firebase Firestore Queries
 
-
-Project Structure:
-
-lib/
-├── controllers/          # State management and data controllers
-├── models/               # Data models (Product, Cart)
-├── views/
-│   ├── home/             # Home screen and product listings
-│   ├── auth/             # Google Sign-In
-│   ├── review_cart/      # Cart and order review
-│   ├── product_overview/ # Product detail view
-│   ├── my_profile/       # Profile page
-│   ├── search/           # Search interface
-│   └── widgets/          # Shared widgets like count, single item
-└── config/               # Color themes and constants
-
-
 Installation:
 i) Clone the repository:
 git clone https://github.com/your-username/flutter-food-app.git
